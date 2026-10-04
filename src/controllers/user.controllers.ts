@@ -64,7 +64,11 @@ export const userRegisterController = asyncHandler(async (req: Request, res: Res
 })
 
 export const verifyOTPController = asyncHandler(async (req: Request, res: Response) => {
-    const { email, contact, otp, username } = req?.body;
+    const email = req?.body?.email;
+    const contact = req?.body?.contact;
+    const otp = req?.body?.otp;
+    const username = req?.body?.username;
+
     if (!otp || otp.length != 6) {
         throw new ApiError(400, "Invalid OTP");
     }
@@ -120,7 +124,9 @@ export const verifyOTPController = asyncHandler(async (req: Request, res: Respon
 })
 
 export const loginController = asyncHandler(async (req: Request, res: Response) => {
-    const { username, email, password } = req?.body;
+    const username = req?.body?.username;
+    const email = req?.body?.email;
+    const password = req?.body?.password;
 
     if (!username && !email) {
         throw new ApiError(400, "Either username or email is required to login");
@@ -179,7 +185,7 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
 })
 
 export const refreshTokenController = asyncHandler(async (req: Request, res: Response) => {
-    const { refreshToken } = req?.cookies;
+    const refreshToken = req?.cookies?.refreshToken;
     if (!refreshToken) {
         throw new ApiError(401, "Token has expired. Please login again");
     }
