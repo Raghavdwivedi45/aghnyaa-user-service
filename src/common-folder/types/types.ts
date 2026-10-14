@@ -1,12 +1,26 @@
-import { Model } from "mongoose";
-import { IUser, IUserMethods } from "../interfaces/interfaces";
+import { Model } from 'mongoose';
+import { IUser, IUserMethods } from '../interfaces/interfaces';
 
-export type userRoleType = "READER" | "AUTHOR" | "ADMIN";
+export type userRoleType = 'READER' | 'AUTHOR' | 'ADMIN';
 
-export type themeType = "Default";
+export type themeType = 'Default';
 
-export type languageType = "English"
+export type languageType = 'English';
 
-export type genreType = "Fiction" | "Non-Fiction" | "Poetry" | "Biography" | "Fantasy" | "Mystery" | "Romance" | "Horror" | "Self-Help" | "Other";
+export type genreType =
+  | 'Fiction'
+  | 'Non-Fiction'
+  | 'Poetry'
+  | 'Biography'
+  | 'Fantasy'
+  | 'Mystery'
+  | 'Romance'
+  | 'Horror'
+  | 'Self-Help'
+  | 'Other';
+
+export type userPaymentType = 'Featured Subscription';
+
+export type paymentStatusType = 'pending' | 'completed' | 'failed';
 
 export type UserModel = Model<IUser, {}, IUserMethods>;
