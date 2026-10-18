@@ -11,6 +11,12 @@ export const errorMiddleware: ErrorRequestHandler = (
 ) => {
   const error = err;
 
+  console.error('Request error', {
+    method: req.method,
+    path: req.originalUrl,
+    error,
+  });
+
   // Custom ApiError
   if (error instanceof ApiError) {
     return res.status(error.statusCode).json({
@@ -70,12 +76,6 @@ export const errorMiddleware: ErrorRequestHandler = (
       data: null,
     });
   }
-
-  console.error('Unhandled request error', {
-    method: req.method,
-    path: req.originalUrl,
-    error,
-  });
 
   return res.status(500).json({
     success: false,
