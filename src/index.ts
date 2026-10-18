@@ -18,6 +18,11 @@ import protectedPaymentRouter from './routes/protectedRoutes/payment.protectedRo
 const port = process.env.PORT || 3500;
 const app = express();
 
+app.use((req, res) => {
+  console.log(process.env.CORS_ORIGINS);
+  console.log(req.url);
+})
+
 app.use(cors({ origin: process.env.CORS_ORIGINS?.split(',') || [], credentials: true }));
 app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true, limit: '16kb' }));
