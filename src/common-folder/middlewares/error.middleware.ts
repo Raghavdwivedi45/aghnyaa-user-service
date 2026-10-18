@@ -7,9 +7,8 @@ export const errorMiddleware: ErrorRequestHandler = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction,
 ) => {
-  let error = err;
+  const error = err;
 
   // Custom ApiError
   if (error instanceof ApiError) {
@@ -72,16 +71,13 @@ export const errorMiddleware: ErrorRequestHandler = (
   }
 
   // Unknown Error
-  console.error(error);
+  console.error("Unknown error", error);
 
   return res.status(500).json({
     success: false,
     message:
-      process.env.NODE_ENV === 'production'
-        ? 'Internal Server Error.'
-        : error instanceof Error
-          ? error.message
-          : 'Internal Server Error.',
+          error.message
+          || 'Internal Server Error.',
     stack:
       process.env.NODE_ENV === 'production'
         ? undefined

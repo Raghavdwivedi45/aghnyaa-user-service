@@ -140,6 +140,9 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
     throw new ApiError(401, 'Invalid credentials');
   }
 
+  console.log("I'm here", username, email);
+  console.log('User info: ', user);
+
   if (!user?.emailVerified && !user?.contactVerified) {
     // this means user was not verified at the time of registration
     const now = new Date();
@@ -152,12 +155,16 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
     user.otp = otp;
     await user?.save();
 
-    await sendEmail(
-      user.email,
-      'Verify your Aghnyaa account',
-      `<h2>Please verify your account to continue.</h2><p>Your OTP is ${otp.value} and it will expire in 10 minutes</p>`,
-      'Please verify your account to continue.',
-    );
+    try {
+      await sendEmail(
+        user.email,
+        'Verify your Aghnyaa account',
+        `<h2>Please verify your account to continue.</h2><p>Your OTP is ${otp.value} and it will expire in 10 minutes</p>`,
+        'Please verify your account to continue.',
+      );
+    } catch (error) {
+      console.log("Error in sending mail", error);
+    }
 
     throw new ApiError(402, 'Please verify your email and try logging in again.');
   }
