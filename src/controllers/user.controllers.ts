@@ -140,9 +140,6 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
     throw new ApiError(401, 'Invalid credentials');
   }
 
-  console.log("I'm here", username, email);
-  console.log('User info: ', user);
-
   if (!user?.emailVerified && !user?.contactVerified) {
     // this means user was not verified at the time of registration
     const now = new Date();
