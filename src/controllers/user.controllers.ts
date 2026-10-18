@@ -155,16 +155,12 @@ export const loginController = asyncHandler(async (req: Request, res: Response) 
     user.otp = otp;
     await user?.save();
 
-    try {
       await sendEmail(
         user.email,
         'Verify your Aghnyaa account',
         `<h2>Please verify your account to continue.</h2><p>Your OTP is ${otp.value} and it will expire in 10 minutes</p>`,
         'Please verify your account to continue.',
       );
-    } catch (error) {
-      console.log("Error in sending mail", error);
-    }
 
     throw new ApiError(402, 'Please verify your email and try logging in again.');
   }

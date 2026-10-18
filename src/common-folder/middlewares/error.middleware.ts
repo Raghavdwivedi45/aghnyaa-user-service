@@ -7,6 +7,7 @@ export const errorMiddleware: ErrorRequestHandler = (
   err: Error,
   req: Request,
   res: Response,
+  _next: NextFunction,
 ) => {
   const error = err;
 
@@ -70,20 +71,10 @@ export const errorMiddleware: ErrorRequestHandler = (
     });
   }
 
-  // Unknown Error
-  console.error("Unknown error", error);
-
   return res.status(500).json({
     success: false,
-    message:
-          error.message
-          || 'Internal Server Error.',
-    stack:
-      process.env.NODE_ENV === 'production'
-        ? undefined
-        : error instanceof Error
-          ? error.stack
-          : undefined,
+    message: process.env.NODE_ENV === 'production' ? 'Internal Server Error.' : error instanceof Error ? error.message : 'Internal Server Error.',
+    stack: process.env.NODE_ENV === 'production' ? undefined : error instanceof Error ? error.stack : undefined,
     data: null,
   });
 };
