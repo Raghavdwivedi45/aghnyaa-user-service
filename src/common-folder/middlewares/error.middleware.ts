@@ -71,6 +71,12 @@ export const errorMiddleware: ErrorRequestHandler = (
     });
   }
 
+  console.error('Unhandled request error', {
+    method: req.method,
+    path: req.originalUrl,
+    error,
+  });
+
   return res.status(500).json({
     success: false,
     message: process.env.NODE_ENV === 'production' ? 'Internal Server Error.' : error instanceof Error ? error.message : 'Internal Server Error.',
